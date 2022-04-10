@@ -9,19 +9,22 @@ export default function Createproject() {
   /* chmando states */
   const { register, handleSubmit } = useForm();
   const [state, setState] = useState(false);
-  const [cadastrado, setCadastro ] = useState(false)
+  const [registered, setRegister] = useState(false)
   
-  if (cadastrado === true ) {
+  if (registered === true ) {
      window.location = '/Projetos'
   }
 
   /* validando e upando dados para json server  */
   const onSubmit = (data) => {
+
     if (data.name === "" || data.orcamento === "" || data.select === "") {
       setState(true);
       console.log(`dados não prencidos ${state}`);
 
     } else {
+      data.services = []
+      
        Api
        .post("/posts", data, {
           headers: { "Content-Type": "application/json" },
@@ -32,7 +35,7 @@ export default function Createproject() {
          .catch((err) => {
             console.log("Ops! ocoreu um erro menó " + err);
          });
-         setCadastro(true)
+         setRegister(true)
     }
   };
 
@@ -60,7 +63,7 @@ export default function Createproject() {
             />
           )}
 
-          {cadastrado && console.log("cadastrou")}
+          {registered && console.log("cadastrou")}
 
           <Form onSubmit={handleSubmit(onSubmit)}>
 

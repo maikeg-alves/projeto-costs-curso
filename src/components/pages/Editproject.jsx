@@ -2,53 +2,136 @@ import { FormControl, FormGroup, Input, InputLabel } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { Button, Container, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import api from "../../services/api";
+import Api from "../../services/api";
+import Basevalues from "../Basevalues";
 import ButtonGeneric from "../ButtonGeneric";
 
 /* styles module */
 import styles from "./Editproject.module.css";
 
-export default function Editproject({ titulo, categoria, orcamento, total }) {
-  
-  const [editname, setName] = useState(false);
+export default function Editproject({titulo, categoria, orcamento, total, id }) {
+
+  const [barstatus, setBarstatus] = useState(false);
   const [servico, setServico] = useState(false);
+  const [sentinel, setSentinel] = useState(false);
+
+  const [editproject, setEditproject] = useState([]);
   const { register, handleSubmit } = useForm();
 
+  const [addservice, setAddservice] = useState([{}]);
 
+
+  const [totalvalue, setTotalvalue] = useState(0)
+  
+  /* Edit Project */
   function ediprofile() {
-    setName(true);
+    setBarstatus(true);
+    setServico(false)
   }
+
+  const onSubmit = (data) => {
+
+    const article = {
+      name: data.name,
+      orcamento: data.orcamento,
+      select: data.select,
+      services: [ ]
+    };
+    
+    if (data.name && data.orcamento && data.select !== "") {
+      
+      console.log("dados prenchidos");
+      Api.put(`/posts/${id}`, article)
+      .then((resp) =>
+      setEditproject([resp.data]), 
+      setSentinel(true)
+      );
+
+      Api.patch(`/posts/${id}`, data.services, { teste: 'teste' })
+
+    } else {
+      console.log("valores invalidos");
+    }
+    
+    
+    
+    setBarstatus(false)
+  };
+
+  /* CREATE SERVICE */
 
   function createservice() {
     setServico(true);
+    setBarstatus(false);
   }
 
-  const onSubmit = (data) => {console.log(data)}
+  function uuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g
+     ,(c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c == 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+   })};
+
+  const onSubmitService = async (data) => {
+
+    const service = { 
+      nome: data.serviconame,
+      descricao: data.descricao,
+      custo: data.custo,
+      id: uuid()
+    }
+
+    const dadosdoprojeto = await Api.get(`/posts/${id}`)
+
+    const servicosexite = dadosdoprojeto.data.services
+
+    if (data.serviconame && data.descricao && data.custo !== "") {
+      
+        Api.patch('/posts/'+id, {
+          services: [
+            ...servicosexite,
+            service
+          ]
+        })
+        
+    }else{
+      console.log("valores invalidos");
+    }
+
+  }
+  
+  useEffect(() => {
+      setEditproject(editproject)
+  }, [editproject])
 
   return (
-    <Container className={styles.container}>
+    <Container key={id} className={styles.container}>
       <Row>
         {/* edit project */}
-        <div className="d-flex navbar  align-items-center">
-          <div>
-            <h1 className={`fs-2 fw-bold ${styles.titulo}`}>{titulo}</h1>
-          </div>
-          <ButtonGeneric onClick={ediprofile} ButtonName={"Editar Projeto"} />
-        </div>
-
-        <div>
-          <p>Categoria: {categoria}</p>
-
-          <p>
-            Total do Orçamento:<strong> R${orcamento} </strong>{" "}
-          </p>
-
-          <p>
-            Total utilizado:<strong> R${total}</strong>{" "}
-          </p>
-        </div>
-
-        {editname && (
+      {!sentinel ? ( 
+          <>
+              <Basevalues 
+              OdifyProject={ediprofile}
+              titulo={`Projeto: `+ titulo}
+              categoria={categoria} 
+              orcamento={orcamento} 
+              total={totalvalue} 
+              />  
+          </>
+         ):( 
+          editproject.map(
+            (resp) => 
+              <Basevalues 
+              OdifyProject={ediprofile}
+              titulo={`Projeto:`+ resp.name}
+              categoria={resp.select} 
+              orcamento={resp.orcamento} 
+              total={totalvalue} 
+              />   
+              )
+         )} 
+        {barstatus && (
           <Form onSubmit={handleSubmit(onSubmit)}>
             <FormGroup>
               <FormControl>
@@ -92,27 +175,38 @@ export default function Editproject({ titulo, categoria, orcamento, total }) {
         )}
 
         {/* add service */}
-        <div
-          className={`d-flex navbar p-3  align-items-center ${styles.servico_box}`}
-        >
+
+        <div className={`d-flex navbar p-3  align-items-center ${styles.servico_box}`}>
           <div>
             <h1 className={`fs-2 fw-bold`}>Adiconar um Serviço:</h1>
           </div>
-          <ButtonGeneric onClick={createservice} ButtonName={"Adiconar Serviço"} />
+          <ButtonGeneric
+            onClick={createservice}
+            ButtonName={"Adiconar Serviço"}
+          />
         </div>
-         {servico && (
-        <Form onSubmit={handleSubmit(onSubmit)}>
+
+        {servico && (
+          <Form onSubmit={handleSubmit(onSubmitService)}>
             <FormGroup>
               <FormControl>
                 <InputLabel htmlFor="my-input">Nome do serviço</InputLabel>
                 <Input
-                  {...register("servico")}
+                  {...register("serviconame")}
                   type="text"
-                  name="servico"
+                  name="serviconame"
                   placeholder="insira o nome do serviço"
                 />
               </FormControl>
-
+              <FormControl>
+                <InputLabel htmlFor="my-input">Custo do serviço</InputLabel>
+                <Input
+                  {...register("custo")}
+                  type="number"
+                  name="custo"
+                  placeholder="insira o valor do serviço"
+                />
+              </FormControl>
               <FormControl>
                 <InputLabel htmlFor="my-input">Descrição do Serviço</InputLabel>
                 <Input
@@ -128,8 +222,8 @@ export default function Editproject({ titulo, categoria, orcamento, total }) {
               Criar serviço
             </Button>
           </Form>
-         )}
- 
+        )}
+
         {/* list services */}
         <div className={`d-flex navbar  align-items-center `}>
           <div>
@@ -139,6 +233,7 @@ export default function Editproject({ titulo, categoria, orcamento, total }) {
         <div>
           <p>Não há serviços cadastrados</p>
         </div>
+
       </Row>
     </Container>
   );

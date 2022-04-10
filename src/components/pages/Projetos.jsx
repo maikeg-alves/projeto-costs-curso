@@ -36,7 +36,6 @@ function Projetos() {
     }
 
     function Teste(id){
-       console.log('o valor recebido do submit é ' + id)
        Api.get(`/posts/${id}`)
        .then((resp) => setUp([resp.data]))
        setStatus(true)
@@ -52,6 +51,8 @@ function Projetos() {
       update.map((resp) => 
        
        <Editproject
+       key={resp.id}
+       id={resp.id}
        titulo={resp.name}
        categoria={resp.select}
        orcamento={resp.orcamento}
