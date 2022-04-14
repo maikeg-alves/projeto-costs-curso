@@ -13,7 +13,7 @@ export default function Basevalues({categoria, orcamento, OdifyProject, titulo, 
           <div>
             <Titile className="fs-2 fw-bold"> {titulo} </Titile>
           </div>
-          <ButtonGeneric onClick={Odify} ButtonName={"Editar Projeto"} />
+          <ButtonGeneric stylebtn={'btn-dark'} onClick={Odify} ButtonName={"Editar Projeto"} />
         </div>
 
       <div>

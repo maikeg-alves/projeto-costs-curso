@@ -8,7 +8,6 @@ import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
 /* rotas */
-/* import Home from './components/pages/Home' */
 import Projetos from './components/pages/Projetos'
 import Empresa from './components/pages/Empresa'
 import Contato from './components/pages/Contato'

@@ -25,7 +25,6 @@ function Projetos() {
     );
   }, []);
 
-
    /* remover projeto */
     function projetoRemover(id) {
       Api.delete(`/posts/${id}`)
@@ -39,7 +38,7 @@ function Projetos() {
        Api.get(`/posts/${id}`)
        .then((resp) => setUp([resp.data]))
        setStatus(true)
-}
+    }
 
     useEffect(() => {
       setUp(update)

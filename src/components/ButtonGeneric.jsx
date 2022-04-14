@@ -1,9 +1,10 @@
 import { Button } from "react-bootstrap"
 
-export default function ButtonGeneric({ButtonName, onClick}) {
+export default function ButtonGeneric({ButtonName, onClick,icon, stylebtn}) {
     return (
         <>
-          <Button className="btn-dark" onClick={onClick}>
+          <Button className={stylebtn} onClick={onClick}>
+                     {icon}
                     {ButtonName}
           </Button>
         </>

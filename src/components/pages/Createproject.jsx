@@ -24,7 +24,7 @@ export default function Createproject() {
 
     } else {
       data.services = []
-      
+      data.coats = []
        Api
        .post("/posts", data, {
           headers: { "Content-Type": "application/json" },
@@ -36,6 +36,7 @@ export default function Createproject() {
             console.log("Ops! ocoreu um erro menó " + err);
          });
          setRegister(true)
+
     }
   };
 

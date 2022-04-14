@@ -5,7 +5,7 @@ import './Footer.css'
 function Footer() {
     return(
         
-         <footer>
+         <footer className="sticky-top">
              <Nav variant="dark" bg="dark">
               <Container>
                <Row className="justify-content-center m-5">
