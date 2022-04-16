@@ -1,52 +1,16 @@
 {
   "posts": [
     {
-      "name": "qweqwe",
-      "orcamento": "5000",
-      "select": "🟠Infra",
-      "services": [
-        {
-          "nome": "12",
-          "descricao": "teste test teste tee st ete te etett 2",
-          "custo": "10",
-          "id": "21cf1ad3-7d1c-4314-8b16-409f875f12e4"
-        }
-      ],
-      "coats": [
-        {}
-      ],
-      "id": 1
-    },
-    {
       "name": "dda",
       "orcamento": "10000",
-      "select": "🟢Desenvolvimento",
-      "services": [
+      "select": "🔵Desing",
+      "services": [],
+      "costs": [
         {
-          "nome": "teste",
-          "descricao": "teste test teste tee st ete te etett ",
-          "custo": "123",
-          "id": "79b2cf2f-ca93-4843-bec5-c1ccaa9c5bbe"
-        },
-        {
-          "nome": "teste",
-          "descricao": "teste test teste tee st ete te etett ",
-          "custo": "123",
-          "id": "f2b6acb3-d222-4c8b-b17a-22c4ead4a4f7"
-        },
-        {
-          "nome": "teste",
-          "descricao": "teste test teste tee st ete te etett 2",
-          "custo": "300",
-          "id": "8bde0dec-9673-4f25-bd7c-b51e3ed563db"
+          "valor": 0
         }
       ],
-      "coats": [
-        {
-          "valor": 546
-        }
-      ],
-      "id": 2
+      "id": 1
     }
   ]
 }

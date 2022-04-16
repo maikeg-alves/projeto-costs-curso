@@ -24,7 +24,7 @@ export default function Createproject() {
 
     } else {
       data.services = []
-      data.coats = []
+      data.costs = [ {valor : 0}]
        Api
        .post("/posts", data, {
           headers: { "Content-Type": "application/json" },

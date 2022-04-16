@@ -19,10 +19,10 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
   const [sentinel2, setSentinel2] = useState(false);
 
   const [editproject, setEditproject] = useState([]);
-/*   const [addedServices, setAddservice] = useState([]);  */
+
   const [base, setBase] = useState([]);
-  const [coats, setCoats] = useState([]);
-/*   const [totalvalue, setTotalvalue] = useState(0);  */
+  const [costs, setCoats] = useState([]);
+
 
   useEffect(() => {
 
@@ -32,13 +32,16 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
     setSentinel2(true)
 
   },[]); // eslint-disable-line react-hooks/exhaustive-deps
-
+  
+  
   useEffect(() => {
-   Api.get(`/posts/${id}`)
-   .then((data)=> 
-   setCoats(data.data.coats))
-  },[]) // eslint-disable-line react-hooks/exhaustive-deps
+    Api.get(`/posts/${id}`)
+    .then((data)=> 
+    setCoats(data.data.costs))
+  },[base]) // eslint-disable-line react-hooks/exhaustive-deps
   /* buttom show input Edit Project */
+  
+  
   function ediprofile() {
     setBarstatus(true);
     setServico(false);
@@ -47,7 +50,7 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
   const onSubmit = (data) => {
     const article = {
       name: data.name,
-      orcamento: data.orcamento - data.data.coats,
+      orcamento: data.orcamento - data.data.costs,
       select: data.select,
     };
 
@@ -83,21 +86,18 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
   const somar = async () => {
     const converting = base.map(({ custo }) =>  parseInt(custo) );
     if (converting.length > 0 ) {
-      const total = converting.reduce((total, currentValue) => 
-       total + currentValue );
 
+      const total = converting.reduce((total, currentValue) => total + currentValue, 0);
+      
       const over =  {
         valor: total
       }
       
-      Api.patch(`/posts/${id}`, { coats : [ over ]})
-      
-      /* const orc = await Api.get(`/posts/${id}`)
-      .then((resp)=> parseInt(resp.data.orcamento)) */
-
+      Api.patch(`/posts/${id}`, { costs : [ over ]})
     }
-
   }
+
+
 
   const onSubmitService = async (data) => {
 
@@ -112,7 +112,7 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
     const dadosdoprojeto = await Api.get(`/posts/${id}`);
 
     const servicosexites = dadosdoprojeto.data.services;
-
+    
     if (data.serviconame && data.descricao && data.custo !== "") {
       Api.patch("/posts/" + id, {
         services: [
@@ -122,7 +122,7 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
       })
       .then((resp) => 
       setBase(resp.data.services))
-
+      
     } else {
       console.log("valores invalidos");
     }
@@ -132,18 +132,15 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
 
   function handleRemove(){
 
-    Api.patch(`/posts/${id}`,{services: []}) 
+    Api.patch(`/posts/${id}`,{services: []} ) 
     .then((resp) => setBase(resp.data.services))
 
-  }
-  
-  let valor = 0
-  
-  if(coats.length > 0 ){
-    valor = coats.map(({valor})=> valor )
-  } else { valor = 0 }
+    Api.patch(`/posts/${id}`,{ costs: [ {valor:0} ]} ) 
+    .then((resp) => setCoats(resp.data.costs))
 
-/*   console.log(coats) */
+  }
+
+  somar()
 
   return (
     <Container key={id} className={styles.container}>
@@ -155,8 +152,11 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
               titulo={`Projeto: ` + titulo}
               categoria={categoria}
               orcamento={orcamento}
-              total={valor}
-            />
+              total={ costs.map(({valor})=> parseInt(valor))}
+              />
+                /* costs.length > 0 ? (
+                  costs.map(({valor})=> parseInt(valor))  
+                ) : ( 0 ) */
         ) : (
           editproject.map((resp) => (
             <Basevalues
@@ -164,7 +164,7 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
               titulo={`Projeto:` + resp.name}
               categoria={resp.select}
               orcamento={resp.orcamento}
-              total={valor}
+              total={costs.map(({valor})=> parseInt(valor))}
             />
           ))
         )}
