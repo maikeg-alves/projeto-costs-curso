@@ -1,15 +1,18 @@
 {
   "posts": [
     {
-      "name": "dda",
+      "name": "123Alves",
       "orcamento": "10000",
-      "select": "🔵Desing",
-      "services": [],
-      "costs": [
+      "select": "🟠Infra",
+      "services": [
         {
-          "valor": 0
+          "nome": "teste",
+          "descricao": "teste test teste tee st ete te etett 2",
+          "custo": "10",
+          "id": "f27139ad-480f-408f-bad5-9e0ca39c26d9"
         }
       ],
+      "costs": 10,
       "id": 1
     }
   ]

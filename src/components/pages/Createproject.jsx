@@ -18,15 +18,22 @@ export default function Createproject() {
   /* validando e upando dados para json server  */
   const onSubmit = (data) => {
 
+    const dadosprojeto = {
+      name: data.name,
+      orcamento: parseInt(data.orcamento),
+      select: data.select,
+      services: [],
+      costs: 0,
+    }
+
     if (data.name === "" || data.orcamento === "" || data.select === "") {
       setState(true);
       console.log(`dados não prencidos ${state}`);
 
     } else {
-      data.services = []
-      data.costs = [ {valor : 0}]
+      
        Api
-       .post("/posts", data, {
+       .post("/posts", dadosprojeto, {
           headers: { "Content-Type": "application/json" },
          })
          .then((resposta) => {

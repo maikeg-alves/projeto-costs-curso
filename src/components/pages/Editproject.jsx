@@ -13,44 +13,38 @@ import styles from "./Editproject.module.css";
 export default function Editproject({ titulo, categoria, orcamento, total, id }) {
   const { register, handleSubmit } = useForm();
 
-  const [barstatus, setBarstatus] = useState(false);
-  const [servico, setServico] = useState(false);
+  const [showproject, setShowProject] = useState(false);
+  const [showservice, setShowService] = useState(false);
+  
   const [sentinel, setSentinel] = useState(false);
   const [sentinel2, setSentinel2] = useState(false);
 
-  const [editproject, setEditproject] = useState([]);
+  const [costs, setCosts] = useState();
+  const [services, setServices] = useState([]);
+  const [projeto, setProjeto] = useState([]);
 
-  const [base, setBase] = useState([]);
-  const [costs, setCoats] = useState([]);
-
-
-  useEffect(() => {
-
+  useEffect(()=> {
     Api.get(`/posts/${id}`)
-    .then((resp) => 
-    setBase(resp.data.services))
+    .then((data)=>(
+    setProjeto([data.data]), 
+    setServices(data.data.services),
+    setCosts(data.data.costs)
+    ))
+    
     setSentinel2(true)
+  },[costs])
 
-  },[]); // eslint-disable-line react-hooks/exhaustive-deps
-  
-  
-  useEffect(() => {
-    Api.get(`/posts/${id}`)
-    .then((data)=> 
-    setCoats(data.data.costs))
-  },[base]) // eslint-disable-line react-hooks/exhaustive-deps
-  /* buttom show input Edit Project */
-  
+
   
   function ediprofile() {
-    setBarstatus(true);
-    setServico(false);
+    setShowProject(true);
+    setShowService(false);
   }
 
   const onSubmit = (data) => {
     const article = {
       name: data.name,
-      orcamento: data.orcamento - data.data.costs,
+      orcamento: data.orcamento,
       select: data.select,
     };
 
@@ -58,20 +52,20 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
       console.log("dados prenchidos");
       
       Api.patch(`/posts/${id}`, article)
-      .then((resp) => setEditproject([resp.data]),
+      .then((resp) => setProjeto([resp.data]),
        setSentinel(true));
 
     } else {
       console.log("valores invalidos");
     }
 
-    setBarstatus(false);
+    setShowProject(false);
   }
 
   /* buttom show input service */
   function createservice() {
-    setServico(true);
-    setBarstatus(false);
+    setShowService(true);
+    setShowProject(false);
   }
 
   /* id dos serviços criados  */
@@ -84,21 +78,20 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
   }
 
   const somar = async () => {
-    const converting = base.map(({ custo }) =>  parseInt(custo) );
+    const converting = services.map(({custo})=> parseInt(custo))
     if (converting.length > 0 ) {
 
-      const total = converting.reduce((total, currentValue) => total + currentValue, 0);
-      
-      const over =  {
-        valor: total
-      }
-      
-      Api.patch(`/posts/${id}`, { costs : [ over ]})
+      const total = converting.reduce((total, currentValue) => total + currentValue);
+
+      Api.patch(`/posts/${id}`, { costs : total })
+      .then((resp)=> setCosts(resp.data.costs))
+        
+      return total
     }
   }
 
 
-
+  /* create services  */
   const onSubmitService = async (data) => {
 
     /* dados sendo prenchidos do services */
@@ -111,36 +104,43 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
 
     const dadosdoprojeto = await Api.get(`/posts/${id}`);
 
-    const servicosexites = dadosdoprojeto.data.services;
-    
+    const servicoexites = dadosdoprojeto.data.services;
+
     if (data.serviconame && data.descricao && data.custo !== "") {
       Api.patch("/posts/" + id, {
         services: [
-          ...servicosexites,
+          ...servicoexites,
            service
           ],
       })
       .then((resp) => 
-      setBase(resp.data.services))
+      setServices(resp.data.services))
       
     } else {
       console.log("valores invalidos");
     }
     
-    setServico(false);
+    setShowService(false);
+    
   }
 
   function handleRemove(){
 
-    Api.patch(`/posts/${id}`,{services: []} ) 
-    .then((resp) => setBase(resp.data.services))
+    Api.patch(`/posts/${id}`,{ costs: 0 , services: []} ) 
+    .then((resp) => 
+    setServices(resp.data.services) )
 
-    Api.patch(`/posts/${id}`,{ costs: [ {valor:0} ]} ) 
-    .then((resp) => setCoats(resp.data.costs))
+    Api.patch(`/posts/${id}`,{ costs: 0 } ) 
+    .then((resp) => 
+    setProjeto(resp.data.costs))
 
   }
-
+  
   somar()
+
+
+  console.log('o valor de projeto é ',projeto);
+  console.log('o valor de costs ',costs);
 
   return (
     <Container key={id} className={styles.container}>
@@ -152,24 +152,24 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
               titulo={`Projeto: ` + titulo}
               categoria={categoria}
               orcamento={orcamento}
-              total={ costs.map(({valor})=> parseInt(valor))}
+              total={ projeto.length > 0 ? ( costs ) : (0) }
               />
                 /* costs.length > 0 ? (
                   costs.map(({valor})=> parseInt(valor))  
                 ) : ( 0 ) */
         ) : (
-          editproject.map((resp) => (
+          projeto.map((resp) => (
             <Basevalues
               OdifyProject={ediprofile}
               titulo={`Projeto:` + resp.name}
               categoria={resp.select}
               orcamento={resp.orcamento}
-              total={costs.map(({valor})=> parseInt(valor))}
+              total={projeto.length > 0 ? ( costs ) : (0)}
             />
           ))
         )}
 
-        {barstatus && (
+        { showproject && (
           <Form onSubmit={handleSubmit(onSubmit)}>
             <FormGroup>
               <FormControl>
@@ -227,7 +227,7 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
           />
         </div>
 
-        {servico && (
+        {showservice && (
           <Form onSubmit={handleSubmit(onSubmitService)}>
             <FormGroup>
               <FormControl>
@@ -270,7 +270,7 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
           <div>
             <h1 className={`fs-2 fw-bold`}>Serviços:</h1>
           </div>
-          {base.length > 0 && ( 
+          {services.length > 0 && ( 
             <ButtonGeneric 
               stylebtn={"btn btn-danger d-flex align-items-center"}
               onClick={handleRemove} 
@@ -282,12 +282,12 @@ export default function Editproject({ titulo, categoria, orcamento, total, id })
 
         <div className={styles.services}>
         {sentinel2 ? (
-          base.map((resp) => 
+          services.map((services) => 
            <Modalservice
-            id={resp.id}
-            name={resp.nome}
-            orc={resp.custo}
-            descricao={resp.descricao}
+            id={services.id}
+            name={services.nome}
+            orc={services.custo}
+            descricao={services.descricao}
            /> )
           ):(
           <div>
