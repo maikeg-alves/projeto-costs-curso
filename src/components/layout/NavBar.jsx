@@ -1,6 +1,6 @@
 import { Outlet , Link} from 'react-router-dom'
 import { Container, Navbar} from 'react-bootstrap'
-import logo from '../img/costs_logo.png' 
+import logo from '../../img/costs_logo.png' 
 import './Navbar.css'
 
 

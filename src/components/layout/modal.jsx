@@ -1,5 +1,5 @@
 import { Button } from "react-bootstrap";
-import styles from "../components/modal.module.css";
+import styles from "./modal.module.css";
 import { BsPencil, BsFillTrashFill } from "react-icons/bs";
 
 export default function Modal({
@@ -21,7 +21,7 @@ export default function Modal({
   }
 
   return (
-    <div key={id} className={`col-auto p-3 ${styles.style_modal}`} >
+    <div key={id} className={`col-auto p-3 ${styles.style_modal}`}>
       <div className={`${styles.backgroud}`}>
         <h3 className="text-break">{name}</h3>
       </div>
@@ -34,7 +34,8 @@ export default function Modal({
         <p>{select}</p>
       </div>
       <div className="hstack gap-3">
-        <Button onClick={update} className="btn-dark btn-primary">
+
+      <Button onClick={update} className="btn-dark btn-primary">
           <BsPencil className="me-2" /> Editar
         </Button>
 

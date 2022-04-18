@@ -1,13 +1,14 @@
 import { React, useState } from "react";
-import { Container, Row, Form, Button,  } from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import Api from "../../services/api";
-import Alerta from "../Alert";
-import { Input, InputLabel, FormControl, FormGroup} from "@material-ui/core";
+import { Container, Row } from "react-bootstrap";
+import Api from "../services/api";
+import Alerta from "../layout/Alert";  
+import ButtonGeneric from "../layout/ButtonGeneric";
+
+import { Form, Input, Select } from '../SmartForm/Formcomponent'
+
 
 export default function Createproject() {
   /* chmando states */
-  const { register, handleSubmit } = useForm();
   const [state, setState] = useState(false);
   const [registered, setRegister] = useState(false)
   
@@ -17,6 +18,8 @@ export default function Createproject() {
 
   /* validando e upando dados para json server  */
   const onSubmit = (data) => {
+    
+    console.log('chegou aqui')
 
     const dadosprojeto = {
       name: data.name,
@@ -32,8 +35,7 @@ export default function Createproject() {
 
     } else {
       
-       Api
-       .post("/posts", dadosprojeto, {
+       Api.post("/posts", dadosprojeto, {
           headers: { "Content-Type": "application/json" },
          })
          .then((resposta) => {
@@ -45,12 +47,13 @@ export default function Createproject() {
          setRegister(true)
 
     }
-  };
+  }
 
   return (
     <Container>
       <Row className="flex-column align-items-center">
         <div className="col-auto p-5">
+
           <div className="mt-4">
             <div className="mb-3">
               <h1 className="fs-2 fw-bold">Criar Projeto</h1>
@@ -73,46 +76,20 @@ export default function Createproject() {
 
           {registered && console.log("cadastrou")}
 
-          <Form onSubmit={handleSubmit(onSubmit)}>
-
-            <FormGroup>
-              <FormControl>
-                <InputLabel htmlFor="my-input">Nome do Projeto</InputLabel>
-                <Input
-                  {...register("name")}
-                  type="text"
-                  name="name"
-                  placeholder="insira o nome do projeto"
-                />
-              </FormControl>
-
-              <FormControl>
-                <InputLabel htmlFor="my-input">Orçamento do Projeto</InputLabel>
-                <Input
-                  {...register("orcamento")}
-                  type="number"
-                  name="orcamento"
-                  placeholder="Insira um valor"
-                />
-              </FormControl>
-            </FormGroup>
-
-            <Form.Group className="mb-3">
-              <Form.Label>
-                Selecione a Categoria
-                <Form.Select {...register("select")}>
-                  <option value=""> Selecione uma opção</option>
-                  <option value="🟠Infra"> Infra</option>
-                  <option value="🟢Desenvolvimento">Desenvolvimento</option>
-                  <option value="🔵Desing"> Desing</option>
-                  <option value="🟡Planejamento"> Planejamento</option>
-                </Form.Select>
-              </Form.Label>
-            </Form.Group>
-
-            <Button type="submit" className="btn-dark">
-              Crira Projeto
-            </Button>
+          <Form onSubmit={onSubmit}>
+          <Input name="name" placeholder={'insira o nome do projeto'}/>
+          <Input name="orcamento" placeholder={'Insira um valor'}/>
+          <Select name="select" 
+          options={[
+            "🟠Infra",
+             "🔵Desing",
+            "🟡Planejamento",
+            "🟢Desenvolvimento"]}  
+            />
+           <ButtonGeneric
+           stylebtn={"btn-dark"}
+           ButtonName={'Crira Projeto'}
+           />
           </Form>
 
         </div>

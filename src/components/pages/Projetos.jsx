@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
-import Api from "../../services/api";
-import ButtonLink from "../ButtonLink";
-import Loading from "../Loading";
-import Modall from "../modal";
+import Api from "../services/api";
+import ButtonLink from "../layout/ButtonLink";
+import Loading from "../layout/Loading";
+import Modall from "../layout/modal";
 import Editproject from "./Editproject";
 
 import styles from "./Projetos.module.css";
-
-function Projetos() {
+ 
+export default function Projetos() {
   const [base, setBase] = useState([]);
   const [removeLoading, setRemoveLoading] = useState(false);
   const [update, setUp] = useState([]);
@@ -34,7 +34,7 @@ function Projetos() {
       })
     }
 
-    function Teste(id){
+    function projetoeditar(id){
        Api.get(`/posts/${id}`)
        .then((resp) => setUp([resp.data]))
        setStatus(true)
@@ -48,19 +48,15 @@ function Projetos() {
     <> 
     {status ? (
       update.map((resp) => 
-       
        <Editproject
        key={resp.id}
        id={resp.id}
        titulo={resp.name}
        categoria={resp.select}
        orcamento={resp.orcamento}
-       total={resp.orcamento > 0 ? ( 0 ):( resp.orcamento)  }
-       />
-
-     )
-
-    ):(
+       total={resp.orcamento }
+       />)
+    ):( 
     <Container className={styles.corp_project}>
       <Row>
         <div className="d-flex navbar  align-items-center">
@@ -82,9 +78,8 @@ function Projetos() {
               name={project.name}
               orc={project.orcamento}
               select={project.select}
-              handleUpdate={Teste}
+              handleUpdate={projetoeditar}
               handleRemove={projetoRemover}
-              
             />
           ))}
         {!removeLoading && <Loading />}
@@ -96,5 +91,3 @@ function Projetos() {
 )}    </>
   );
 }
-
-export default Projetos;

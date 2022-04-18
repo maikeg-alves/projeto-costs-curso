@@ -1,11 +1,13 @@
-import ButtonGeneric from "./ButtonGeneric";
-import Titile from "./TitileStyled";
+import ButtonGeneric from "../layout/ButtonGeneric";
+import Titile from "../layout/TitileStyled";
 
 export default function Basevalues({categoria, orcamento, OdifyProject, titulo, total}) {
 
+
    function Odify(e){
      OdifyProject(e)
-   }
+
+   }  
 
   return (
     <>
