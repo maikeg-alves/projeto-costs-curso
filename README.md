@@ -1,70 +1,57 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Projeto Costs, inicio em Reactjs 
 
-## Available Scripts
+Esse projeto teve como inicio o meu primeiro contato 
+com React js, através do canal do [Matheus Battisti](https://github.com/matheusbattisti) 
+do canal [Hora de Codar](https://www.youtube.com/c/MatheusBattisti)
 
-In the project directory, you can run:
 
-### `yarn start`
+## Projeto Costs
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+O projeto Costs é o projeto de conclusão do curso do 
+[Matheus Battisti](https://github.com/matheusbattisti), porem esse projeto em si que está
+nesse repositório tem somente o design e funcionalidades parecidas porem 
+o código  é de total autoria minha, você pode comparar
+o código aqui: [Código  original projeto costs por Matheus Battisti ](https://github.com/matheusbattisti/curso_react_yt).  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Objetivo 
 
-### `yarn test`
+O Objetivo foi-me desafiar a usar os conhecimentos
+Básicos que adquirir com o curso e a partir dai poder
+Fazer o projeto final sozinho usando somente ferramentas
+Básicas de qualquer programador o Google, futuns e artigos.
+##  Dependências 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Axios](https://axios-http.com/ptbr/docs/intro)
+- [Json-server](https://www.npmjs.com/package/json-server)
+- [React-bootstrap](https://react-bootstrap.github.io/)
+- [React-hook-form](https://react-hook-form.com/)
+- [React-router-dom v6](https://reactrouter.com/)
+- [uuid](https://www.npmjs.com/package/uuid)
 
-### `yarn build`
+## Aprendizados
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Com esse projeto aprendi a fazer CRUD, aprendi a usar useState, useEfect e useForm, aprendi muito sobre props e muito também sobre componentes, aprendi os fundamentos do React js.
 
-### `yarn eject`
+Meus maiores desafios foram aprender do zero como usar o React Router na sua versão mais recente, foi um desafio também saber lidar com consumo de API mesmo sendo uma fake API, criada atras do Json Server, foi meu primeiro contato com esse tipo de tecnologia e que me despertou mais ainda o interesse.
+## Planos Futuros 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Os planos futuros para esse projeto é a criação de uma Api com nodejs e adição de um sistema de autenticação para que futuramente esse projeto sirva como painel de controle para o meu futuro portfólio. 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Tecnologias
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<div style="display: flex;">  
 
-## Learn More
+  <img align="center" alt="maikeg-alves" height="70" width="70"
+  src="https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" />
+  
+  <img align="center" alt="maikeg-alves" height="70" width="70"
+  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain-wordmark.svg"/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  <img align="center" alt="maikeg-alves" height="70" width="70"
+  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain-wordmark.svg"/>
+  
+</div>
