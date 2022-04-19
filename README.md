@@ -19,7 +19,9 @@ o código aqui: [Código  original projeto costs por Matheus Battisti ](https://
 O Objetivo foi-me desafiar a usar os conhecimentos
 Básicos que adquirir com o curso e a partir dai poder
 Fazer o projeto final sozinho usando somente ferramentas
-Básicas de qualquer programador o Google, futuns e artigos.
+Básicas de qualquer programador o Google, Fóruns e Artigos.
+
+
 ##  Dependências 
 
 - [Axios](https://axios-http.com/ptbr/docs/intro)
