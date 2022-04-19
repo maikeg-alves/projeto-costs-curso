@@ -43,7 +43,7 @@ Os planos futuros para esse projeto é a criação de uma Api com nodejs e adiç
 
 ## Tecnologias
 
-<div style="display: flex;">  
+<div style="display: inline-flex;">  
 
   <img align="center" alt="maikeg-alves" height="70" width="70"
   src="https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" />
