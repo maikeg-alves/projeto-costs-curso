@@ -43,6 +43,9 @@ export default function Projetos() {
     useEffect(() => {
       setUp(update)
     }, [update]);
+
+
+ //dados da interface    
    
   return (
     <> 
